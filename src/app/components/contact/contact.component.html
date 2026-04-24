@@ -1,0 +1,45 @@
+<section id="faq">
+  <h2>Preguntas Frecuentes</h2>
+  <p class="section-subtitle">Resuelve tus dudas sobre CineMax</p>
+  <div class="faq-container">
+    <div class="faq-item">
+      <h3 (click)="toggleFAQ(0)" class="faq-question">
+        <span>¿Puedo cambiar mi plan en cualquier momento?</span>
+        <span class="icon" [class.open]="openFAQ[0]">+</span>
+      </h3>
+      <div class="faq-answer" *ngIf="openFAQ[0]">
+        <p>Sí, puedes cambiar, mejorar o cancelar tu plan en cualquier momento sin penalidades. Los cambios se aplican al siguiente ciclo de facturación.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 (click)="toggleFAQ(1)" class="faq-question">
+        <span>¿Hay período de prueba gratis?</span>
+        <span class="icon" [class.open]="openFAQ[1]">+</span>
+      </h3>
+      <div class="faq-answer" *ngIf="openFAQ[1]">
+        <p>Sí, ofrecemos 30 días de prueba gratuita en todos los planes. No se requiere tarjeta de crédito para comenzar.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 (click)="toggleFAQ(2)" class="faq-question">
+        <span>¿En cuántos dispositivos puedo ver simultáneamente?</span>
+        <span class="icon" [class.open]="openFAQ[2]">+</span>
+      </h3>
+      <div class="faq-answer" *ngIf="openFAQ[2]">
+        <p>Depende tu plan: Básico (1 pantalla), Premium (4 pantallas) y Familiar (6 pantallas).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <h3 (click)="toggleFAQ(3)" class="faq-question">
+        <span>¿Puedo descargar contenido para ver offline?</span>
+        <span class="icon" [class.open]="openFAQ[3]">+</span>
+      </h3>
+      <div class="faq-answer" *ngIf="openFAQ[3]">
+        <p>Sí, con los planes Premium y Familiar puedes descargar películas y series para ver sin conexión.</p>
+      </div>
+    </div>
+  </div>
+</section>

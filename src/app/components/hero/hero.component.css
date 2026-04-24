@@ -1,0 +1,93 @@
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23e50914;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%23000;stop-opacity:0.5" /></linearGradient></linearGradient></defs><rect width="1200" height="600" fill="url(%23grad)"/></svg>');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 120px 20px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #e50914;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.hero-text h1 {
+  color: white;
+  font-size: 56px;
+  margin: 20px 0;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.hero-text p {
+  color: #ccc;
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-buttons button {
+  padding: 16px 40px;
+  font-size: 16px;
+}
+
+button.outline {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid #fff;
+}
+
+button.outline:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 400px;
+    padding: 60px 20px;
+  }
+
+  .hero-text h1 {
+    font-size: 36px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons button {
+    width: 100%;
+  }
+}

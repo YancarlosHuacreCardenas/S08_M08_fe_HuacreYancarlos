@@ -1,0 +1,16 @@
+<section id="plans">
+  <h2>Planes de Suscripción</h2>
+  <p class="section-subtitle">Elige el plan perfecto para ti</p>
+  <div class="plans-container">
+    <div class="plan-card" *ngFor="let plan of plans" [class.popular]="plan.popular">
+      <div *ngIf="plan.popular" class="badge">MÁS POPULAR</div>
+      <h3>{{ plan.nombre }}</h3>
+      <p class="price">{{ plan.precio }}<span>/mes</span></p>
+      <p class="description">{{ plan.descripcion }}</p>
+      <ul class="features">
+        <li *ngFor="let feature of plan.features">✓ {{ feature }}</li>
+      </ul>
+      <button (click)="seleccionarPlan(plan.nombre)">Comenzar Ahora</button>
+    </div>
+  </div>
+</section>

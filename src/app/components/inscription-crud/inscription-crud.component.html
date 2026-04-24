@@ -1,0 +1,127 @@
+<div class="crud-container">
+  <!-- Header -->
+  <div class="crud-header">
+    <button class="back-btn" (click)="goBack()">← Volver</button>
+    <h1>🎬 Gestión de Películas</h1>
+    <div class="header-actions">
+      <button class="toggle-btn" [class.active]="showAll" (click)="toggleShowAll()">
+        {{ showAll ? '👁️ Viendo Todas' : '🔍 Ver Activas' }}
+      </button>
+      <button class="add-btn" (click)="openForm()">+ Nueva Película</button>
+    </div>
+  </div>
+
+  <!-- Form Modal -->
+  <div class="form-overlay" *ngIf="showForm" (click)="cancelForm()">
+    <div class="form-card" (click)="$event.stopPropagation()">
+      <h2>{{ editing ? '✏️ Editar Película' : '➕ Nueva Película' }}</h2>
+      <form #movieForm="ngForm" (ngSubmit)="save()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title">Título</label>
+            <input id="title" type="text" [(ngModel)]="movie.title" name="title" #title="ngModel" placeholder="Título" required />
+          </div>
+          <div class="form-group">
+            <label for="director">Director</label>
+            <input id="director" type="text" [(ngModel)]="movie.director" name="director" #director="ngModel" placeholder="Director" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea id="description" [(ngModel)]="movie.description" name="description" placeholder="Sinopsis" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="genre">Género</label>
+            <input id="genre" type="text" [(ngModel)]="movie.genre" name="genre" placeholder="Ej: Acción" />
+          </div>
+          <div class="form-group">
+            <label for="year">Año</label>
+            <input id="year" type="number" [(ngModel)]="movie.year" name="year" placeholder="2026" />
+          </div>
+          <div class="form-group">
+            <label for="duration">Duración (min)</label>
+            <input id="duration" type="number" [(ngModel)]="movie.duration" name="duration" placeholder="120" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="imageUrl">URL de Imagen</label>
+            <input id="imageUrl" type="text" [(ngModel)]="movie.imageUrl" name="imageUrl" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Fecha de Estreno</label>
+            <input id="releaseDate" type="date" [(ngModel)]="movie.releaseDate" name="releaseDate" />
+          </div>
+        </div>
+        <div class="form-group checkbox-group" *ngIf="editing">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="movie.available" name="available" />
+            Disponible
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn" [disabled]="!movieForm.form.valid">{{ editing ? 'Actualizar' : 'Guardar' }}</button>
+          <button type="button" class="cancel-btn" (click)="cancelForm()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Cargando películas...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && movies.length === 0">
+    <span class="empty-icon">🎬</span>
+    <h3>No hay películas registradas</h3>
+    <p>Haz clic en "Nueva Película" para agregar una.</p>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper" *ngIf="!loading && movies.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Director</th>
+          <th>Género</th>
+          <th>Año</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of movies" [class.inactive-row]="!m.available">
+          <td>{{ m.id }}</td>
+          <td class="title-cell">
+            <div class="movie-title">{{ m.title }}</div>
+          </td>
+          <td>{{ m.director }}</td>
+          <td><span class="genre-badge">{{ m.genre }}</span></td>
+          <td>{{ m.year }}</td>
+          <td>
+            <span class="status-badge" [class.available]="m.available" [class.unavailable]="!m.available">
+              {{ m.available ? '✅ Activa' : '❌ Inactiva' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button type="button" class="edit-btn" (click)="editMovie(m)" title="Editar">
+              ✏️ Editar
+            </button>
+            <button type="button" *ngIf="m.available" class="delete-btn" (click)="deleteMovie(m.id!)" title="Desactivar">
+              🗑️ Desactivar
+            </button>
+            <button type="button" *ngIf="!m.available" class="restore-btn" (click)="restoreMovie(m.id!)" title="Restaurar">
+              🔄 Restaurar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

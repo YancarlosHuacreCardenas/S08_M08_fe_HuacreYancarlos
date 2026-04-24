@@ -1,0 +1,79 @@
+header {
+  background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+  border-bottom: 2px solid #e50914;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #e50914;
+  font-weight: 700;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #e50914;
+}
+
+.subscribe-btn {
+  background-color: #e50914;
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+.crud-link {
+  text-decoration: none !important;
+  color: #fff !important;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+  display: inline-block;
+}
+
+.crud-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
+  color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 15px 20px;
+  }
+
+  nav {
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,247 @@
+#movies {
+  background-color: #1a1a1a;
+  padding: 100px 20px;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  color: #999;
+  margin-bottom: 60px;
+}
+
+.movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.movie-card {
+  background: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-poster {
+  position: relative;
+  width: 100%;
+  padding-bottom: 150%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  border-radius: 8px;
+}
+
+.movie-poster img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-overlay button {
+  background-color: #e50914;
+  padding: 12px 30px;
+  font-size: 16px;
+}
+
+.movie-card h3 {
+  margin: 15px 0 8px 0;
+  font-size: 16px;
+}
+
+.movie-card .genre {
+  color: #999;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.movie-card .rating {
+  color: #e50914;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .movies-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Estilos para las nuevas secciones */
+.content-section {
+  background-color: #1a1a1a;
+  padding: 100px 20px;
+}
+
+.content-section:nth-child(odd) {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+}
+
+.content-section h2 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.content-section .section-subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  margin-bottom: 60px;
+}
+
+/* Formulario de contacto */
+.contact-form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.contact-form {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  padding: 40px;
+  border-radius: 12px;
+  border: 2px solid #333;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  background: #0f0f0f;
+  border: 2px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #e50914;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #e50914 0%, #b2070f 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #ff1f1f 0%, #e50914 100%);
+  transform: translateY(-2px);
+}
+
+.contact-info {
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  padding: 40px;
+  border-radius: 12px;
+  border: 2px solid #333;
+}
+
+.contact-info h3 {
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.contact-info p {
+  color: #ccc;
+  font-size: 18px;
+  margin: 20px 0;
+  line-height: 1.8;
+}
+
+.contact-info strong {
+  color: #e50914;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.social-link {
+  padding: 12px 25px;
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.social-link:hover {
+  background: #e50914;
+}
+
+@media (max-width: 900px) {
+  .contact-form-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .content-section h2 {
+    font-size: 32px;
+  }
+}
