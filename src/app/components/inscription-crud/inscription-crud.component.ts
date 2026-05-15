@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MovieService, Movie } from '../../services/inscription.service';
 
 @Component({
@@ -10,31 +11,36 @@ import { MovieService, Movie } from '../../services/inscription.service';
 export class InscriptionCrudComponent implements OnInit {
 
   movies: Movie[] = [];
-  movie: Movie = this.emptyMovie();
+  movieForm!: FormGroup;
   editing = false;
   editingId: number | null = null;
   showForm = false;
   loading = false;
   showAll = true;
 
-  constructor(private movieService: MovieService) {}
+  constructor(
+    private movieService: MovieService,
+    private fb: FormBuilder
+  ) {
+    this.initForm();
+  }
 
   ngOnInit(): void {
     this.loadMovies();
   }
 
-  emptyMovie(): Movie {
-    return {
-      title: '',
-      description: '',
-      director: '',
-      year: null,
-      genre: '',
-      duration: null,
-      imageUrl: '',
-      available: true,
-      releaseDate: ''
-    };
+  initForm(): void {
+    this.movieForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.maxLength(500)]],
+      director: ['', [Validators.required]],
+      year: [null, [Validators.min(1888), Validators.max(new Date().getFullYear() + 5)]],
+      genre: ['', [Validators.required]],
+      duration: [null, [Validators.min(1)]],
+      imageUrl: ['', [Validators.pattern('https?://.+')]],
+      available: [true],
+      releaseDate: ['']
+    });
   }
 
   loadMovies(): void {
@@ -64,14 +70,14 @@ export class InscriptionCrudComponent implements OnInit {
     this.showForm = true;
     this.editing = false;
     this.editingId = null;
-    this.movie = this.emptyMovie();
+    this.movieForm.reset({ available: true });
   }
 
   editMovie(m: Movie): void {
     this.showForm = true;
     this.editing = true;
     this.editingId = m.id!;
-    this.movie = {
+    this.movieForm.patchValue({
       title: m.title,
       description: m.description,
       director: m.director,
@@ -81,16 +87,19 @@ export class InscriptionCrudComponent implements OnInit {
       imageUrl: m.imageUrl,
       available: m.available,
       releaseDate: m.releaseDate
-    };
+    });
   }
 
   save(): void {
-    if (!this.movie.title || !this.movie.director) {
+    if (this.movieForm.invalid) {
+      this.movieForm.markAllAsTouched();
       return;
     }
 
+    const movieData: Movie = this.movieForm.value;
+
     if (this.editing && this.editingId !== null) {
-      this.movieService.update(this.editingId, this.movie).subscribe({
+      this.movieService.update(this.editingId, movieData).subscribe({
         next: () => {
           this.loadMovies();
           this.cancelForm();
@@ -98,7 +107,7 @@ export class InscriptionCrudComponent implements OnInit {
         error: (err) => console.error('Error updating', err)
       });
     } else {
-      this.movieService.create(this.movie).subscribe({
+      this.movieService.create(movieData).subscribe({
         next: () => {
           this.loadMovies();
           this.cancelForm();
@@ -109,11 +118,9 @@ export class InscriptionCrudComponent implements OnInit {
   }
 
   deleteMovie(id: number): void {
-    console.log('Intentando desactivar película con ID:', id);
     this.loading = true;
     this.movieService.delete(id).subscribe({
       next: () => {
-        console.log('Desactivación exitosa');
         this.loadMovies();
       },
       error: (err) => {
@@ -124,11 +131,9 @@ export class InscriptionCrudComponent implements OnInit {
   }
 
   restoreMovie(id: number): void {
-    console.log('Intentando restaurar película con ID:', id);
     this.loading = true;
     this.movieService.restore(id).subscribe({
       next: () => {
-        console.log('Restauración exitosa');
         this.loadMovies();
       },
       error: (err) => {
@@ -142,7 +147,12 @@ export class InscriptionCrudComponent implements OnInit {
     this.showForm = false;
     this.editing = false;
     this.editingId = null;
-    this.movie = this.emptyMovie();
+    this.movieForm.reset({ available: true });
+  }
+
+  isFieldInvalid(field: string): boolean {
+    const control = this.movieForm.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
   goBack(): void {

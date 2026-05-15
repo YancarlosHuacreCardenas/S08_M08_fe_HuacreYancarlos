@@ -15,53 +15,75 @@
   <div class="form-overlay" *ngIf="showForm" (click)="cancelForm()">
     <div class="form-card" (click)="$event.stopPropagation()">
       <h2>{{ editing ? '✏️ Editar Película' : '➕ Nueva Película' }}</h2>
-      <form #movieForm="ngForm" (ngSubmit)="save()">
+      <form [formGroup]="movieForm" (ngSubmit)="save()">
         <div class="form-row">
           <div class="form-group">
             <label for="title">Título</label>
-            <input id="title" type="text" [(ngModel)]="movie.title" name="title" #title="ngModel" placeholder="Título" required />
+            <input id="title" type="text" formControlName="title" placeholder="Título" [class.is-invalid]="isFieldInvalid('title')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('title')">
+              <span *ngIf="movieForm.get('title')?.errors?.['required']">El título es obligatorio.</span>
+              <span *ngIf="movieForm.get('title')?.errors?.['minlength']">Mínimo 3 caracteres.</span>
+            </div>
           </div>
           <div class="form-group">
             <label for="director">Director</label>
-            <input id="director" type="text" [(ngModel)]="movie.director" name="director" #director="ngModel" placeholder="Director" required />
+            <input id="director" type="text" formControlName="director" placeholder="Director" [class.is-invalid]="isFieldInvalid('director')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('director')">
+              El director es obligatorio.
+            </div>
           </div>
         </div>
         <div class="form-group">
           <label for="description">Descripción</label>
-          <textarea id="description" [(ngModel)]="movie.description" name="description" placeholder="Sinopsis" rows="3"></textarea>
+          <textarea id="description" formControlName="description" placeholder="Sinopsis" rows="3" [class.is-invalid]="isFieldInvalid('description')"></textarea>
+          <div class="error-msg" *ngIf="isFieldInvalid('description')">
+            Máximo 500 caracteres.
+          </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="genre">Género</label>
-            <input id="genre" type="text" [(ngModel)]="movie.genre" name="genre" placeholder="Ej: Acción" />
+            <input id="genre" type="text" formControlName="genre" placeholder="Ej: Acción" [class.is-invalid]="isFieldInvalid('genre')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('genre')">
+              El género es obligatorio.
+            </div>
           </div>
           <div class="form-group">
             <label for="year">Año</label>
-            <input id="year" type="number" [(ngModel)]="movie.year" name="year" placeholder="2026" />
+            <input id="year" type="number" formControlName="year" placeholder="2026" [class.is-invalid]="isFieldInvalid('year')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('year')">
+              Año inválido (1888 - {{2031}}).
+            </div>
           </div>
           <div class="form-group">
             <label for="duration">Duración (min)</label>
-            <input id="duration" type="number" [(ngModel)]="movie.duration" name="duration" placeholder="120" />
+            <input id="duration" type="number" formControlName="duration" placeholder="120" [class.is-invalid]="isFieldInvalid('duration')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('duration')">
+              Debe ser mayor a 0.
+            </div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label for="imageUrl">URL de Imagen</label>
-            <input id="imageUrl" type="text" [(ngModel)]="movie.imageUrl" name="imageUrl" placeholder="https://..." />
+            <input id="imageUrl" type="text" formControlName="imageUrl" placeholder="https://..." [class.is-invalid]="isFieldInvalid('imageUrl')" />
+            <div class="error-msg" *ngIf="isFieldInvalid('imageUrl')">
+              URL inválida.
+            </div>
           </div>
           <div class="form-group">
             <label for="releaseDate">Fecha de Estreno</label>
-            <input id="releaseDate" type="date" [(ngModel)]="movie.releaseDate" name="releaseDate" />
+            <input id="releaseDate" type="date" formControlName="releaseDate" />
           </div>
         </div>
         <div class="form-group checkbox-group" *ngIf="editing">
           <label class="checkbox-label">
-            <input type="checkbox" [(ngModel)]="movie.available" name="available" />
+            <input type="checkbox" formControlName="available" />
             Disponible
           </label>
         </div>
         <div class="form-actions">
-          <button type="submit" class="save-btn" [disabled]="!movieForm.form.valid">{{ editing ? 'Actualizar' : 'Guardar' }}</button>
+          <button type="submit" class="save-btn" [disabled]="movieForm.invalid">{{ editing ? 'Actualizar' : 'Guardar' }}</button>
           <button type="button" class="cancel-btn" (click)="cancelForm()">Cancelar</button>
         </div>
       </form>

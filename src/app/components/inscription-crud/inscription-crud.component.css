@@ -489,3 +489,35 @@ tbody tr.inactive-row {
     font-size: 12px;
   }
 }
+/* ==================== VALIDATION STYLES ==================== */
+.form-group input.is-invalid,
+.form-group textarea.is-invalid {
+  border-color: #ff4d4d !important;
+  background: rgba(255, 77, 77, 0.05) !important;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.1) !important;
+}
+
+.error-msg {
+  color: #ff4d4d;
+  font-size: 11px;
+  margin-top: 5px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: slideDown 0.2s ease;
+}
+
+.save-btn:disabled {
+  background: linear-gradient(135deg, #444, #222);
+  color: #666;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-5px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
